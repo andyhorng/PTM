@@ -1,0 +1,65 @@
+<table>
+
+  <tr>
+    <td><%= student_form.label "姓名" %> </td>
+    <td><%= student_form.text_field :name, :size => 12 %></td>
+  </tr>
+
+  <tr>
+    <td><%= student_form.label "學號" %> </td>
+    <td><%= student_form.text_field :student_number, :size => 9 %> </td>
+  </tr>
+
+  <tr>
+    <td><%= student_form.label "系所" %></td>
+    <td><%= student_form.text_field :department %></td>
+  </tr>
+
+  <tr>
+    <td> <%= student_form.label "身份證" %> </td>
+    <td> <%= student_form.text_field :id_number %> </td>
+  </tr>
+
+  <tr>
+    <td> <%= student_form.label "E-Mail" %> </td>
+    <td> <%= student_form.text_field :email %> </td>
+  </tr>
+
+  <tr>
+    <td> <%= student_form.label "聯絡電話(家)" %></td>
+    <td> <%= student_form.text_field :home_tel %> </td>
+  </tr>
+
+  <tr>
+    <td> <%= student_form.label "聯絡電話(公)" %></td>
+    <td> <%= student_form.text_field :work_tel %> </td>
+  </tr>
+
+  <tr>
+    <td> <%= student_form.label "手機" %></td>
+    <td> <%= student_form.text_field :phone_number %> </td>
+  </tr>
+
+  <tr>
+    <td style="vertical-align: top;"> <%= student_form.label "地址" %> </td>
+    <td> <%= student_form.text_area :address, :size => '35x2'  %> </td>
+  </tr>
+
+  <tr> 
+    <td>郵局(<%= student_form.label "局名" %>-<%= student_form.label "局號" %>-<%= student_form.label "帳號" %>)</td> 
+    <td><%= student_form.text_field :post_office_name, :size => 10 %>-
+      <%= student_form.text_field :post_office_number, :size => 10 %>-
+      <%= student_form.text_field :post_office_account, :size => 10 %></td>
+  </tr>
+
+  <tr>
+    <td> <%= student_form.label "在校成績" %> </td>
+    <td> <%= student_form.text_field :school_score, :size => 5 %> </td>
+  </tr>
+
+  <tr>
+    <td style="vertical-align: top;"> <%= student_form.label "備註" %> </td>
+    <td> <%= student_form.text_area :memo, :size => '35x15' %> </td>
+  </tr>
+
+</table>

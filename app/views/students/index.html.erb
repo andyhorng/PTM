@@ -1,0 +1,7 @@
+<h1>清單</h1>
+
+<%= render :partial => "search_form" %>
+
+<div id="students_list"><%= render :partial => 'students', :object => @students %></div>
+
+<%= link_to '新增', new_student_path %>

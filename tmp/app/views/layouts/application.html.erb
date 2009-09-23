@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'reset' %>
+  <%= stylesheet_link_tag 'application' %>
+  <%= javascript_include_tag :defaults %>
+  <%= calendar_date_select_includes "silver" %>
+
+</head>
+<body>
+  <div id="top">
+    <% if current_administrator %>
+      <%= current_administrator.login %>
+      <%= link_to "首頁", :controller => "students", :action => "index" %>
+      <%= link_to "設定", :controller => "system_datas", :action => "index" %>
+      <%= link_to_remote "小幫手",
+        {:url => {:controller => "students", :action => "small_helper"}}.merge(with_loading) %>
+      <%= link_to "登出", administrator_session_path, :method => :delete %>
+    <% end %>
+    <span id="loading" style="display: none;">Loading</span>
+  </div>
+
+  <div id="flash_notice"><%= flash[:notice] %></div>
+
+  <div id="content">
+    <%= yield %>
+  </div>
+
+</body>
+</html>

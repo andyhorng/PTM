@@ -1,0 +1,18 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+andy_one:
+  total_hours: 10
+  week_hours: 1
+  hourly_money: 1
+  from: 2009-08-26
+  to: 2009-08-26
+  student: andy
+
+andy_two:
+  total_hours: 100
+  week_hours: 1
+  hourly_money: 1
+  from: 2009-08-26
+  to: 2009-08-26
+  student: andy
+

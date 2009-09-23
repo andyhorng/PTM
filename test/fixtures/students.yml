@@ -1,0 +1,33 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   name: MyString
+#   student_number: MyString
+#   department: MyString
+#   id_number: MyString
+#   phone_number: MyString
+#   address: MyText
+#   post_office_account: MyString
+#   post_office_number: MyString
+#   school_score: 9.99
+#   memo: MyText
+# 
+# two:
+#   name: MyString
+#   student_number: MyString
+#   department: MyString
+#   id_number: MyString
+#   phone_number: MyString
+#   address: MyText
+#   post_office_account: MyString
+#   post_office_number: MyString
+#   school_score: 9.99
+#   memo: MyText
+
+
+andy:
+  name: 洪盟翔
+  student_number: 975202007
+  department: 資工
+  
+

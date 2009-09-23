@@ -1,0 +1,11 @@
+<% fields_for :"hour#{i}", hour do |f|%>
+  <tr id="<%= "hour#{i}" %>">
+    <td><%= f.select(:semester_type, %w(上學期 下學期 暑假 寒假))%></td>
+    <td><%= f.calendar_date_select :from, :size => 10 %></td>
+    <td><%= f.calendar_date_select :to, :size => 10 %></td>
+    <td><%= f.text_field :week_hours, :size => 4 %></td>
+    <td><%= f.text_field :total_hours, :size => 4 %></td>
+    <td><%= f.text_field :hourly_money, :size => 4 %></td>
+    <td><%= link_to_remote "刪除", :url => {:controller => :hours, :action => :destroy, :row_id => i}, :html => {:class => 'hour_delete_link'} %></td>
+  </tr>
+<% end %>

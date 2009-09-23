@@ -1,0 +1,32 @@
+<table class="table_list">
+  <tr>
+    <th>姓名</th>
+    <th>學號</th>
+    <th>系所</th>
+    <th>總時數</th>
+    <% unless defined? readonly %>
+      <th></th>
+    <% end %>
+
+  </tr>
+
+<% students.each do |student| %>
+  <tr class="<%= cycle("even", "odd") %>">
+    <td><%= link_to (h student.name), {:action => :show, :id => student, :search_string => params[:search_string]} %></td>
+    <td><%=h student.student_number %></td>
+    <td><%=h student.department %></td>
+    <td><%=h student.total_hours %></td>
+
+    <% unless defined? readonly %>
+      <td>
+        <%= link_to '編輯', edit_student_path(student, :search_string => params[:search_string]) %>
+        <%= link_to '刪除', student, :confirm => '確定嗎?', :method => :delete %>
+      </td>
+    <% end %>
+
+  </tr>
+<% end %>
+</table>
+<% if searching? %>
+  <h1><%= link_to "清除", :action => "end_searching" %></h1>
+<% end %>

@@ -1,0 +1,15 @@
+<%= render :partial => "student", :object => @student %>
+
+<% javascript_tag do  -%>
+  function readonly(element) {
+    element.writeAttribute("readonly", "readonly");
+  }
+  function disabled(element) {
+    element.writeAttribute("disabled", "disabled");
+  }
+  $$('input').each(readonly);
+  $$('textarea').each(readonly);
+  $$('select').each(disabled);
+  $$('.calendar_date_select_popup_icon').each(Element.remove);
+  $$('.hour_delete_link').each(Element.remove);
+<% end -%>

@@ -1,0 +1,23 @@
+<ul>
+  <% @sets.each do |name, values| %>
+    <li><h1><%= name %></h1></li>
+    <ul>
+      <% values.each do |v| %>
+        <li>
+          <%= v.value %>
+          <%= link_to 'Delete', system_data_url(v), :method => :delete, :confirm => 'Sure?' %>
+        </li>
+      <% end %>
+    </ul>
+    <li>
+    
+    <% form_for @new_datas[name] do |f| %>
+      <%= f.hidden_field :name %>
+      <%= f.text_field :value %>
+      <%= f.submit 'Create' %>
+    <% end %>
+    
+    </li>
+  <% end %>
+</ul>
+

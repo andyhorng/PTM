@@ -1,0 +1,8 @@
+<div class="search_div">
+
+  <% form_remote_tag({:url => search_for_index_students_url, :method => 'get'}.merge(with_loading)) do %>
+      <%= text_field_tag :search_string, params[:search_string] %>
+      <%= submit_tag '搜尋' %>
+    <% end %>
+
+</div>
