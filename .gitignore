@@ -7,3 +7,5 @@ tmp
 *.sqlite3
 
 .NERDTreeBookmarks
+
+db/schema.rb
