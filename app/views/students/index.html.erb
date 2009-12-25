@@ -2,7 +2,7 @@
 
 <%= render :partial => "search_form" %>
 
-<%= render :partial => 'students', :object => @students, :locals => {:part_time => true} %>
+<%= render :partial => 'students', :object => @students, :locals => {:part_time => true, :column_size => 30} %>
 
 <% content_for(:sidebar) do %>
   <li>

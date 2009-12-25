@@ -1,7 +1,9 @@
-**/*.swp
+*.swp
 
-log/**/*
+log
 
-tmp/**/*
+tmp
+
+*.sqlite3
 
 .NERDTreeBookmarks

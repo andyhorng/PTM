@@ -41,8 +41,10 @@ Rails::Initializer.run do |config|
   config.gem "authlogic"
   config.gem "calendar_date_select"
 
-  config.gem 'mislav-will_paginate', :version => '~> 2.3.2',
-              :lib => 'will_paginate', :source => 'http://gems.github.com'
+
+  # config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', :source => 'http://gems.github.com'
+  config.gem 'will_paginate'
+
 
 end
 
