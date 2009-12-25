@@ -1,6 +1,6 @@
 class SystemDataSecondVersion < ActiveRecord::Migration
   def self.up
-    remove_column :system_datas, :value, :string
+    remove_column :system_datas, :value
 
     create_table "system_data_values" do |t|
       t.integer :system_data_id

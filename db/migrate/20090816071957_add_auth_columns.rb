@@ -6,8 +6,8 @@ class AddAuthColumns < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :administrators, :crypted_password, :string
-    remove_column :administrators, :password_salt, :string
-    remove_column :administrators, :persistence_token, :string
+    remove_column :administrators, :crypted_password
+    remove_column :administrators, :password_salt
+    remove_column :administrators, :persistence_token
   end
 end

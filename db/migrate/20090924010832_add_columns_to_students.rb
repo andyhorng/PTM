@@ -5,7 +5,7 @@ class AddColumnsToStudents < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :students, :pt_type, :string
-    remove_column :students, :money_source, :string
+    remove_column :students, :pt_type
+    remove_column :students, :money_source
   end
 end

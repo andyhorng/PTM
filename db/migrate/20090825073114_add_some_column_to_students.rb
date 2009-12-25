@@ -7,9 +7,9 @@ class AddSomeColumnToStudents < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :students, :email, :string
-    remove_column :students, :post_office_name, :string
-    remove_column :students, :home_tel, :string
-    remove_column :students, :work_tel, :string
+    remove_column :students, :email
+    remove_column :students, :post_office_name
+    remove_column :students, :home_tel
+    remove_column :students, :work_tel
   end
 end

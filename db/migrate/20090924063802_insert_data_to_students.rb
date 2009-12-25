@@ -33,6 +33,6 @@ class InsertDataToStudents < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :students, :total_hours, :integer
+    remove_column :students, :total_hours
   end
 end
