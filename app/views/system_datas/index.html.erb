@@ -1,23 +1,22 @@
-<ul>
-  <% @sets.each do |name, values| %>
-    <li><h1><%= name %></h1></li>
+<ul id="system_datas">
+
+  <% @system_datas.each do |d| %>
+    <li><h1><%= I18n.t("system_data.#{d.name}") %></h1></li>
     <ul>
-      <% values.each do |v| %>
+      <% d.system_data_values.each do |v| %>
         <li>
           <%= v.value %>
-          <%= link_to 'Delete', system_data_url(v), :method => :delete, :confirm => 'Sure?' %>
+          <%= link_to I18n.t('system_data.delete'), {:action => :destroy, :id => v}, 
+            :method => :delete, :confirm => I18n.t('system_data.confirm') %>
         </li>
       <% end %>
     </ul>
     <li>
-    
-    <% form_for @new_datas[name] do |f| %>
-      <%= f.hidden_field :name %>
-      <%= f.text_field :value %>
-      <%= f.submit 'Create' %>
-    <% end %>
-    
+      <% form_for :system_data_value, @new_data[d.name] do |f| %>
+        <%= f.hidden_field :system_data_id %>
+        <%= f.text_field :value %>
+        <%= f.submit I18n.t('system_data.create') %>
+      <% end %>
     </li>
   <% end %>
 </ul>
-

@@ -1,15 +1,18 @@
 <%= render :partial => "student", :object => @student %>
-
-<% javascript_tag do  -%>
+<% javascript_tag do  %>
   function readonly(element) {
-    element.writeAttribute("readonly", "readonly");
+    element.writeAttribute("readonly", "readonly")
   }
   function disabled(element) {
-    element.writeAttribute("disabled", "disabled");
+    element.writeAttribute("disabled", "disabled")
   }
-  $$('input').each(readonly);
-  $$('textarea').each(readonly);
-  $$('select').each(disabled);
-  $$('.calendar_date_select_popup_icon').each(Element.remove);
-  $$('.hour_delete_link').each(Element.remove);
-<% end -%>
+  $('student_submit').hide()
+  $$('input').each(readonly)
+  $$('textarea').each(readonly)
+  $$('select').each(disabled)
+  $$('.calendar_date_select_popup_icon').each(Element.remove)
+  $$('#new_hour_link').each(Element.remove)
+  $$('#content a').each(Element.remove)
+<% end %>
+
+<%= render :partial => "small_helper" %>

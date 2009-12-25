@@ -1,26 +1,28 @@
 class StudentsController < ApplicationController
 
-  before_filter :close_sh, :except => [:small_helper, :search_for_helper]
   helper_method :searching?
 
   # GET /students
   # GET /students.xml
   def index
-    # clear session of :hours_ix
-    session[:hours_ix] = nil
-
     if !searching?
-      @students = Student.all
+      # @students = Student.all
+      @students = Student.paginate :page => params[:page]
     else
       # searching!
-      flash.now[:notice] = "請按清除離開搜尋結果"
-      @students = session[:search_result]
+      flash.now[:notice] = I18n.t('flash.student.clear')
+      @students = search
     end
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @students }
     end
+  end
+
+  def recently_changed
+    @students = Student.paginate(:all, :conditions => ['updated_at >= ?', "#{Date.today - 3}"],
+                                 :order => 'updated_at DESC',:page => params[:page])
   end
 
 =begin
@@ -54,47 +56,36 @@ class StudentsController < ApplicationController
 =end
 
 
-  # return search result
-  def search str = session[:search_string]
-    Student.find_by_sql(gen_searching_sql(str))
-  end
 
   def search_for_index
     if params[:search_string] || searching?
       session[:searching] = true
-
-      if !params[:search_string].blank?
-        session[:search_result] = search
-        session[:search_string] = params[:search_string]
-      else
-        session[:search_result] ||= search
-        session[:search_string] ||= params[:search_string]
-      end
-
-      session[:search_result] = search
-      @students = session[:search_result]
-      flash.now[:notice] = "請按清除離開搜尋結果"
+      session[:search_string] = params[:search_string]
+      @students = search
+      flash.now[:notice] = I18n.t('flash.student.clear')
       # render search.html.erb
-      render :update do |page|
-        page.replace_html 'students_list', :partial => 'students', :object => @students
-        page.replace_html 'flash_notice', :text => flash.now[:notice]
-        page.visual_effect :highlight, 'students_list'
-      end
+      # render :update do |page|
+      #   page.replace_html 'students_list', :partial => 'students', :object => @students, :locals => {:column => 2}
+      #   page.replace_html 'flash_notice', :text => flash.now[:notice]
+      #   page.visual_effect :highlight, 'students_list'
+      # end
+      redirect_to students_url
     end
   end
 
   def search_for_helper
-    logger.info("#search_for_helper(before): " + session[:sh_state].to_s)
-    session[:search_string_for_helper] = params[:search_string]
-    session[:small_helper_result] = search(session[:search_string_for_helper])
+    if !params[:search_string].blank? 
+      session[:search_string_for_helper] = params[:search_string]
+      session[:small_helper_result] = 
+        Student.find_by_sql(gen_searching_sql(session[:search_string_for_helper]))
+    end 
     render :partial => "students", :object => session[:small_helper_result], :locals => {:readonly => true}
-    logger.info("#search_for_helper(after): " + session[:sh_state].to_s)
   end
 
   def back
     redirect_to students_url
   end
-
+=begin
   def small_helper
     session[:small_helper_result] ||= []
     if sh_opened?
@@ -114,11 +105,13 @@ class StudentsController < ApplicationController
     end
     logger.info("#small_helper: " + session[:sh_state].to_s)
   end
+=end
 
   # GET /students/1
   # GET /students/1.xml
   def show
     @student = Student.find(params[:id])
+    @hours = @student.hours
 
     respond_to do |format|
       format.html # show.html.erb
@@ -131,7 +124,7 @@ class StudentsController < ApplicationController
   def new
     @student = Student.new
     # @student.hours << Hour.new
-    @hours = Hour.new
+    @hours = [Hour.new]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -142,6 +135,7 @@ class StudentsController < ApplicationController
   # GET /students/1/edit
   def edit
     @student = Student.find(params[:id])
+    @hours = @student.hours
   end
 
 
@@ -149,11 +143,10 @@ class StudentsController < ApplicationController
   # POST /students.xml
   def create
     @student = Student.new(params[:student])
-    @student.hours = get_hours
 
     respond_to do |format|
       if @student.save
-        flash[:notice] = 'Student was successfully created.'
+        flash[:notice] = I18n.t('flash.student.create_successful')
         format.html { redirect_to(@student) }
         format.xml  { render :xml => @student, :status => :created, :location => @student }
       else
@@ -167,11 +160,10 @@ class StudentsController < ApplicationController
   # PUT /students/1.xml
   def update
     @student = Student.find(params[:id])
-    @student.hours = get_hours
 
     respond_to do |format|
       if @student.update_attributes(params[:student])
-        flash[:notice] = 'Student was successfully updated.'
+        flash[:notice] = I18n.t('flash.student.update_successful') 
         format.html { redirect_to(@student) }
         format.xml  { head :ok }
       else
@@ -197,31 +189,16 @@ class StudentsController < ApplicationController
   def end_searching
     session[:searching] = false
     session[:search_string] = nil
-    session[:search_result] = nil
     redirect_to students_url
   end
 
-
   private
 
-  def sh_opened?
-    return session[:sh_state]
-  end
-  def open_sh
-    session[:sh_state] = true
-  end
-  def close_sh
-    session[:sh_state] = nil
+  # return search result
+  def search str = session[:search_string]
+    Student.paginate_by_sql(gen_searching_sql(str), :page => params[:page])
   end
 
-  def get_hours
-    keys = params.keys.find_all {|key| key =~ /hour\d+/}
-
-    keys.collect do |key|
-        logger.info params[:"#{key}"]
-        Hour.new(params[:"#{key}"])
-    end
-  end
 
   def gen_searching_sql(search_string)
     column_for_search = Student.column_names

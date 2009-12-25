@@ -1,29 +1,25 @@
+<% unless student.new_record? %>
+  <% content_for(:sidebar) do %>
+    <li><%= link_to I18n.t('student.delete'), student, :confirm => I18n.t('student.confirm'), :method => :delete %></li>
+    <% if action_name == "show" %> <li><%= link_to I18n.t('student.edit'), edit_student_url %></li><% end %>
+  <% end %>
+<% end %>
+
+
+<% content_for(:sidebar) do %>
+  <li><%= link_to I18n.t('student.back'), :action => 'back' %></li>
+<% end %>
+
+<div id="student">
 <% form_for(student) do |f| %>
 <div id="info">
-  <h1>基本資料</h1>
+  <h1><%= I18n.t('student.basic_info') %></h1>
   <%= f.error_messages %>
   <%= render :partial => 'student_form', :object => f %>
-  <p><%= f.submit '送出' %></p>
-  <%= link_to '返回', :action => 'back' %>
 </div>
 
-<div id="hours">
-  <h1>時數</h1>
-  <%= link_to_remote '新增時數', :url => {:controller => 'hours', :action => 'new', :hours_ix => student.hours.size} %>
-
-  <table id="hours_table">
-    <tr>
-      <th>學期</th>
-      <th>開始</th>
-      <th>結束</th>
-      <th>周時數</th>
-      <th>總時數</th>
-      <th>時薪</th>
-      <th></th>
-    </tr>
-    <% student.hours.each_with_index do |hour, i| %>
-      <%= render :partial => 'hours/hour', :locals => {:i => i, :hour => hour} %>
-    <% end %>
-  </table>
-</div>
+<p>
+<%= f.submit '送出' %>
+</p>
 <% end %>
+</div>

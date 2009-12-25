@@ -1,6 +1,6 @@
 
-<h1>搜尋結果</h1>
+<h1><%= I18n.t('student.search.result') %></h1>
 
 <%= render :partial => "students", :object => @students %>
 
-<%= link_to '返回', :controller => "students", :action => "end_searching" %>
+<%= link_to I18n.t('student.back'), :controller => "students", :action => "end_searching" %>

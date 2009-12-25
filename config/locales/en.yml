@@ -1,5 +1,82 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+
+  layout:
+    top:
+      index: "Home"
+      setting: "settings"
+      helper: "Quick Search"
+      logout: "logout"
+
+    loading:  "Loading..."
+
+    footer: 
+      copyright: "Copyright©"
+
+  login:
+    login: "log in"
+    name:  "id"
+    password: "password"
+
+
+  student:
+    basic_info: "background"
+    list: "list"
+    new: "new"
+    edit: "edit"
+    delete: "delete"
+    confirm: "submit"
+    clear: "clear"
+    back: "back"
+
+    money_source: "source"
+    pt_type: "type"
+    name: "name"
+    student_id: "student id"
+    department:  "department"
+    total_hours: "Total hours"
+    id: "Identified ID"
+    email: "E-Mail"
+    phone_number: "cell phone"
+    home_tel: "Phone(home)"
+    work_tel: "Phone(business)"
+    address: "Address"
+    post_office_name: "office name"
+    post_office_number: "office code"
+    post_office_account: "Account"
+    school_score: "Grades"
+    note: "Notes"
+
+    hour:
+      hour: "hours"
+      type: 
+        type: "term"
+        a:  "first term"
+        b:  "second term"
+        c:  "summer vacation"
+        d:  "winter vacation"
+      start: "begin"
+      end: "end"
+      week_hours: "weekly hours"
+      total_hours: "total hours"
+      hourly_money: "hourly pay"
+      delete: "delete"
+      new: "add"
+      
+
+    search: 
+      search: "search"
+      blank: "not found"
+      result: "result"
+
+  system_data:
+    money_source: "source"
+    pt_type: "type"
+    create: "create"
+    delete: "delete"
+    confirm: "submit"
+
+
+  pagination:
+    prev: "prev"
+    next: "next"

@@ -1,32 +1,77 @@
-<table class="table_list">
+<% if students.blank? %>
+  <h1><%= I18n.t('student.search.blank') %></h1>
+<% end %>
+
+<% if !students.blank? %>
+<table>
   <tr>
-    <th>姓名</th>
-    <th>學號</th>
-    <th>系所</th>
-    <th>總時數</th>
-    <% unless defined? readonly %>
-      <th></th>
-    <% end %>
-
-  </tr>
-
-<% students.each do |student| %>
-  <tr class="<%= cycle("even", "odd") %>">
-    <td><%= link_to (h student.name), {:action => :show, :id => student, :search_string => params[:search_string]} %></td>
-    <td><%=h student.student_number %></td>
-    <td><%=h student.department %></td>
-    <td><%=h student.total_hours %></td>
-
-    <% unless defined? readonly %>
+    <% students.in_groups_of(((defined? column_size) ? column_size : students.size), false) do |group| %>
       <td>
-        <%= link_to '編輯', edit_student_path(student, :search_string => params[:search_string]) %>
-        <%= link_to '刪除', student, :confirm => '確定嗎?', :method => :delete %>
+        <table class="table_list">
+          <tr>
+            <th><%= I18n.t('student.name') %></th>
+            <th><%= I18n.t('student.student_id') %></th>
+            <th><%= I18n.t('student.department') %></th>
+            <th><%= I18n.t('student.total_hours') %></th>
+            <% if defined? part_time %>
+              <th> <%= I18n.t('student.hour.type.type') %></th>
+              <th> <%= I18n.t('student.hour.start') %></th>
+              <th> <%= I18n.t('student.hour.end') %></th>
+            <% end %>
+            <% unless defined? readonly %>
+              <th></th>
+            <% end %>
+          </tr>
+
+          <% group.each do |student| %>
+            <tr class="<%= cycle("even", "odd") %>">
+              <td><%= link_to (h student.name), {:action => :show, :id => student, 
+                :search_string => params[:search_string]} %></td>
+              <td><%=h student.student_number %></td>
+              <td><%=h student.department %></td>
+              <td><%=h student.total_hours %></td>
+
+              <% if defined? part_time %>
+                <td><table>
+                <% student.hours.each do|hour| %> 
+                  <tr><td><%= hour.semester_type %></td></tr>
+                <% end %>
+              </table></td>
+                <td><table>
+                <% student.hours.each do|hour| %> 
+                  <tr><td><%= hour.from %></td></tr>
+                <% end %>
+              </table></td>
+                <td><table>
+                <% student.hours.each do|hour| %> 
+                  <tr><td><%= hour.to %></td></tr>
+                <% end %>
+              </table></td>
+
+              <% end %>
+
+              <% unless defined? readonly %>
+                <td>
+                  <%= link_to I18n.t('student.edit'), edit_student_path(student, :search_string => params[:search_string]) %>
+                  <%= link_to I18n.t('student.delete'), student, :confirm => I18n.t('student.confirm'), :method => :delete %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </table>
       </td>
     <% end %>
-
   </tr>
-<% end %>
 </table>
-<% if searching? %>
-  <h1><%= link_to "清除", :action => "end_searching" %></h1>
+<% if defined? column_size %>
+  <%= will_paginate students %>
 <% end %>
+
+<% end %>
+
+<p>
+<% if searching? && !defined? small_helper %>
+  <h1><%= link_to I18n.t('student.clear'), :action => "end_searching" %></h1>
+<% end %>
+</p>
+

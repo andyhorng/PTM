@@ -1,0 +1,13 @@
+  <tr class="fields">
+    <td><%= f.select(:semester_type, 
+                     [ I18n.t('student.hour.type.a'),
+                       I18n.t('student.hour.type.b'),
+                       I18n.t('student.hour.type.c'),
+                       I18n.t('student.hour.type.d')]) %></td>
+    <td><%= f.calendar_date_select :from, :size => 10 %></td>
+    <td><%= f.calendar_date_select :to, :size => 10 %></td>
+    <td><%= f.text_field :week_hours, :size => 4 %></td>
+    <td><%= f.text_field :total_hours, :size => 4 %></td>
+    <td><%= f.text_field :hourly_money, :size => 4 %></td>
+    <td><%= remove_child_link(I18n.t('student.hour.delete'), f) %></td>
+  </tr>

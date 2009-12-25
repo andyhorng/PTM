@@ -1,65 +1,96 @@
 <table>
-
   <tr>
-    <td><%= student_form.label "姓名" %> </td>
-    <td><%= student_form.text_field :name, :size => 12 %></td>
+    <td><%= student_form.label I18n.t('student.money_source') %></td>
+    <td><%= student_form.select :money_source, SystemData.all_values_of('money_source') %></td>
+    <td><%= student_form.label I18n.t('student.pt_type') %></td>
+    <td><%= student_form.select :pt_type, SystemData.all_values_of('pt_type') %></td>
   </tr>
 
   <tr>
-    <td><%= student_form.label "學號" %> </td>
+    <td><%= student_form.label I18n.t('student.name') %> </td>
+    <td><%= student_form.text_field :name, :size => 12 %></td>
+    <td><%= student_form.label I18n.t('student.student_id') %> </td>
     <td><%= student_form.text_field :student_number, :size => 9 %> </td>
   </tr>
 
   <tr>
-    <td><%= student_form.label "系所" %></td>
+    <td><%= student_form.label I18n.t('student.department') %></td>
     <td><%= student_form.text_field :department %></td>
-  </tr>
-
-  <tr>
-    <td> <%= student_form.label "身份證" %> </td>
+    <td> <%= student_form.label I18n.t('student.id') %> </td>
     <td> <%= student_form.text_field :id_number %> </td>
   </tr>
 
   <tr>
-    <td> <%= student_form.label "E-Mail" %> </td>
+    <td> <%= student_form.label I18n.t('student.email') %> </td>
     <td> <%= student_form.text_field :email %> </td>
-  </tr>
-
-  <tr>
-    <td> <%= student_form.label "聯絡電話(家)" %></td>
-    <td> <%= student_form.text_field :home_tel %> </td>
-  </tr>
-
-  <tr>
-    <td> <%= student_form.label "聯絡電話(公)" %></td>
-    <td> <%= student_form.text_field :work_tel %> </td>
-  </tr>
-
-  <tr>
-    <td> <%= student_form.label "手機" %></td>
+    <td> <%= student_form.label I18n.t('student.phone_number') %></td>
     <td> <%= student_form.text_field :phone_number %> </td>
   </tr>
 
   <tr>
-    <td style="vertical-align: top;"> <%= student_form.label "地址" %> </td>
-    <td> <%= student_form.text_area :address, :size => '35x2'  %> </td>
+    <td> <%= student_form.label I18n.t('student.home_tel') %></td>
+    <td> <%= student_form.text_field :home_tel %> </td>
+    <td> <%= student_form.label I18n.t('student.work_tel') %></td>
+    <td> <%= student_form.text_field :work_tel %> </td>
   </tr>
 
-  <tr> 
-    <td>郵局(<%= student_form.label "局名" %>-<%= student_form.label "局號" %>-<%= student_form.label "帳號" %>)</td> 
-    <td><%= student_form.text_field :post_office_name, :size => 10 %>-
+
+  <tr>
+    <td style="vertical-align: top;"> <%= student_form.label I18n.t('student.address') %></td>
+    <td colspan="3"><%= student_form.text_area :address, :size => '35x2' %> </td>
+  </tr>
+  <tr>
+    <td colspan="4">郵局(<%= student_form.label I18n.t('student.post_office_name') -%>
+      -<%= student_form.label I18n.t('student.post_office_number') -%>
+      -<%= student_form.label I18n.t('student.post_office_account') -%>) 
+    <%= student_form.text_field :post_office_name, :size => 10 %>-
       <%= student_form.text_field :post_office_number, :size => 10 %>-
       <%= student_form.text_field :post_office_account, :size => 10 %></td>
   </tr>
 
   <tr>
-    <td> <%= student_form.label "在校成績" %> </td>
+    <td> <%= student_form.label I18n.t('student.school_score') %> </td>
     <td> <%= student_form.text_field :school_score, :size => 5 %> </td>
+    <td></td>
+    <td></td>
   </tr>
 
   <tr>
-    <td style="vertical-align: top;"> <%= student_form.label "備註" %> </td>
+    <td colspan="4">
+    <div id="hours">
+      <h1><%= I18n.t('student.hour.hour') %></h1>
+
+      <table id="hours_table">
+        <tr>
+          <th><%= I18n.t('student.hour.type.type') %></th>
+          <th><%= I18n.t('student.hour.start') %></th>
+          <th><%= I18n.t('student.hour.end') %></th>
+          <th><%= I18n.t('student.hour.week_hours') %></th>
+          <th><%= I18n.t('student.hour.total_hours') %></th>
+          <th><%= I18n.t('student.hour.hourly_money') %></th>
+          <th></th>
+        </tr>
+
+        <% @hours.each do |hour| %>
+          <% student_form.fields_for :hours, hour do |hours_form|%>
+            <%= render :partial => 'hour', :locals => {:f => hours_form} %>
+          <% end %>
+        <% end %>
+
+      </table>
+
+      <% content_for(:sidebar) do %>
+        <li id="new_hour_link"><%= add_child_link(I18n.t('student.hour.new'), student_form, :hours) %></li>
+      <% end %>
+    </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="vertical-align: top;"> <%= student_form.label I18n.t('student.note') %> </td>
     <td> <%= student_form.text_area :memo, :size => '35x15' %> </td>
+    <td></td>
+    <td></td>
   </tr>
 
 </table>

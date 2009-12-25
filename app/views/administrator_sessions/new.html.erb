@@ -1,19 +1,19 @@
 <% form_for @administrator_session, :url => administrator_session_path do |f| %>
   <fieldset style="margin: 1em; width:300px;border: thin solid #000;">
-    <legend style="margin: 1em; font-size: 20px; letter-spacing: 0.5em;">Login</legend>
+    <legend style="margin: 1em; font-size: 20px; letter-spacing: 0.5em;"><%= I18n.t('login.login') %></legend>
     <p>
     <%= f.error_messages %>
     </p>
     <p>
-    <%= f.label :login %><br />
+    <%= f.label :login, I18n.t('login.name') %><br />
     <%= f.text_field :login %><br />
     </p>
     <p>
-    <%= f.label :password %><br />
+    <%= f.label :password, I18n.t('login.password') %><br />
     <%= f.password_field :password %><br />
     </p>
     <p>
-    <%= f.submit "Login" %>
+    <%= f.submit I18n.t('login.login') %>
     </p>
   </fieldset>
 <% end %>

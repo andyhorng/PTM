@@ -1,0 +1,11 @@
+<h1><%= I18n.t('student.recently_changed') %></h1>
+
+<%= render :partial => "search_form" %>
+
+<%= render :partial => 'students', :object => @students, :locals => {:column_size => 15} %>
+
+<%= render :partial => "small_helper" %>
+
+<% content_for(:sidebar) do %>
+  <li><%= link_to I18n.t('student.back'), back_students_path %></li>
+<% end %>

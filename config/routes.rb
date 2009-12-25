@@ -10,7 +10,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :students, :collection => { :end_searching => :get, 
     :small_helper => :get, :search_for_index => :get, :back => :get,
     :search_for_helper => :get,
-    :clear => :get } do |students|
+    :clear => :get,
+    :recently_changed => :get
+  } do |students|
     students.resources :hours, :except => [:new]
   end
 

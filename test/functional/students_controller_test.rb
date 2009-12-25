@@ -1,46 +1,61 @@
 require 'test_helper'
 
 class StudentsControllerTest < ActionController::TestCase
-  test "should get index" do
+
+  fixtures :administrators
+  setup :activate_authlogic
+
+  def setup
+    @login = AdministratorSession.create(administrators(:andy))
+  end
+
+  test "the truth" do
+    assert true
+  end
+
+  test "index" do
     get :index
-    assert_response :success
-    assert_not_nil assigns(:students)
+    assert_template :index
+    assert_select "table tr td", /#{students(:andy).name}/
+    assert_select "table tr td", /#{students(:fred).name}/
+    assert_select "table tr td", /#{students(:neet).name}/
   end
 
-  test "should get new" do
-    get :new
-    assert_response :success
+  test "index with searching" do 
+    session[:searching] = true
+    session[:search_string] = 'abcdefghijlnm'
+    get :index
+    assert_template :index
+    assert_equal  I18n.t('flash.student.clear'), flash[:notice]
+    assert_select '#content', /#{I18n.t('student.search.blank')}/
   end
 
-  test "should create student" do
-    assert_difference('Student.count') do
-      post :create, :student => { }
-    end
-
-    assert_redirected_to student_path(assigns(:student))
+  test "index with searching and search result" do 
+    session[:searching] = true
+    session[:search_string] = students(:andy).name
+    get :index
+    assert_select '#content table', /#{students(:andy).name}/
+    assert_select '#content table', /#{students(:andy).total_hours}/
   end
 
-  test "should show student" do
-    get :show, :id => students(:one).to_param
-    assert_response :success
+
+  test "search for index" do 
+    get :search_for_index, {:search_string => students(:andy).name}
+    assert_redirected_to students_url
   end
 
-  test "should get edit" do
-    get :edit, :id => students(:one).to_param
-    assert_response :success
+  test "search for helper" do
+    xhr(:post, :search_for_helper, {:search_string => students(:andy).name})
+    assert_select "table tr", 1
+    assert_select "table tr", /#{students(:andy).name}/
   end
 
-  test "should update student" do
-    put :update, :id => students(:one).to_param, :student => { }
-    assert_redirected_to student_path(assigns(:student))
+  test "back" do 
+    get :back
+    assert_redirected_to students_url
   end
 
-  test "should destroy student" do
-    assert_difference('Student.count', -1) do
-      delete :destroy, :id => students(:one).to_param
-    end
-
-    assert_redirected_to students_path
+  test "" do
   end
 
 end

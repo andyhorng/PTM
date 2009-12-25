@@ -5,3 +5,10 @@
 #
 # two:
 #   column: value
+
+data1:
+  name: n1
+
+data2:
+  name: n2
+

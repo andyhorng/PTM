@@ -9,7 +9,7 @@ class AdministratorSessionsController < ApplicationController
   def create
     @administrator_session = AdministratorSession.new(params[:administrator_session])
     if @administrator_session.save
-      flash[:notice] = "Login successful!"
+      flash[:notice] = I18n.t('flash.login.successful')
       redirect_to :controller => 'students'
     else
       render :action => :new
@@ -18,7 +18,7 @@ class AdministratorSessionsController < ApplicationController
   def destroy
     logger.info "logout!!!!"
     current_administrator_session.destroy
-    flash[:notice] = "Logout successful!"
+    flash[:notice] = I18n.t('flash.logout.successful') 
     reset_session
     redirect_to :action => :new
   end

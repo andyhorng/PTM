@@ -1,14 +1,19 @@
+<% content_for :top_menu do %>
+  <%= link_to_function I18n.t('layout.top.helper'), "s=$('small_helper');s.visible()?Effect.BlindUp(s):Effect.BlindDown(s);" %>
+<% end %>
+
 <div id="small_helper" style="display:none">
   <div class="search_div">
     <% form_remote_tag({:url => {:action => "search_for_helper"}, 
                        :method => 'get', 
                        :update => "small_helper_result"}.merge(with_loading)) do %>
       <%= text_field_tag :search_string, session[:search_string_for_helper] %>
-      <%= submit_tag '搜尋' %>
+      <%= submit_tag I18n.t('student.search.search')%>
     <% end %>
 
   </div>
     <div id="small_helper_result">
-      <%= render :partial => "students", :object => session[:small_helper_result], :locals => {:readonly => true} %>
+      <%= render :partial => "students", :object => session[:small_helper_result] || [], 
+        :locals => {:readonly => true, :small_helper => true} %>
     </div>
 </div>

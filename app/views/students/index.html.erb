@@ -1,7 +1,15 @@
-<h1>清單</h1>
+<h1><%= I18n.t('student.list') %></h1>
 
 <%= render :partial => "search_form" %>
 
-<div id="students_list"><%= render :partial => 'students', :object => @students %></div>
+<%= render :partial => 'students', :object => @students, :locals => {:part_time => true} %>
 
-<%= link_to '新增', new_student_path %>
+<% content_for(:sidebar) do %>
+  <li>
+    <%= link_to I18n.t('student.new'), new_student_path %>
+  </li>
+  <li>
+    <%= link_to I18n.t('student.recently_changed'), recently_changed_students_path %>
+  </li>
+<% end %>
+<%= render :partial => "small_helper" %>

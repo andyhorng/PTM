@@ -1,0 +1,98 @@
+
+tw:
+
+  flash:
+    login:
+      successful: "登入成功！"
+      must_login: "必須先登入！"
+    logout:
+      successful: "登出成功！"
+    student:
+      clear: "請按清除離開搜尋結果"
+      create_successful: "已經成功建立資料"
+      update_successful: "已經成功更新資料"
+    system_data:
+      create_successful: "已經成功建立資料"
+
+
+
+  layout:
+    top:
+      index: "首頁"
+      setting: "設定"
+      helper: "快速搜尋"
+      logout: "登出"
+
+    loading:  "讀取中..."
+
+    footer: 
+      copyright: "版權所有© andyhorng "
+
+  login:
+    login: "登入"
+    name:  "帳號"
+    password: "密碼"
+
+
+  student:
+    basic_info: "基本資訊"
+    list: "清單"
+    new: "新增"
+    edit: "編輯"
+    delete: "刪除"
+    confirm: "確定嗎？"
+    clear: "清除"
+    back: "返回"
+    recently_changed: "最近更新"
+
+    money_source: "來源"
+    pt_type: "工讀類型"
+    name: "姓名"
+    student_id: "學號"
+    department:  "系所"
+    total_hours: "總時數"
+    id: "身份證"
+    email: "E-Mail"
+    phone_number: "手機"
+    home_tel: "聯絡電話(家)"
+    work_tel: "聯絡電話(公)"
+    address: "地址"
+    post_office_name: "局名"
+    post_office_number: "局號"
+    post_office_account: "帳號"
+    school_score: "在校成績"
+    note: "備註"
+
+    hour:
+      hour: "時數"
+      type: 
+        type: "學期"
+        a:  "上學期"
+        b:  "下學期"
+        c:  "暑假"
+        d:  "寒假"
+      start: "開始"
+      end: "結束"
+      week_hours: "周時數"
+      total_hours: "總時數"
+      hourly_money: "時薪"
+      delete: "刪除"
+      new: "新增時數"
+      
+
+    search: 
+      search: "搜尋"
+      blank: "搜尋結果為空"
+      result: "搜尋結果"
+
+  system_data:
+    money_source: "預算來源"
+    pt_type: "工讀類型"
+    create: "建立"
+    delete: "刪除"
+    confirm: "確定嗎？"
+
+
+  pagination:
+    prev: "上一頁"
+    next: "下一頁"

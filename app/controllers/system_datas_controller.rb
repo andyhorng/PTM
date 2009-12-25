@@ -1,23 +1,25 @@
 class SystemDatasController < ApplicationController
 
   def index
-    @system_data = SystemData.all
-    @sets = @system_data.group_by {|d| d.name}
-    # new datas is a hash which key is name(data) and value is value(data)
-    @new_datas = @sets.keys.collect {|k| SystemData.new(:name => k)}.index_by {|d| d.name}
+    @system_datas = SystemData.all
+    @new_data = @system_datas.collect do |d| 
+      v = SystemDataValue.new 
+      v.system_data = d
+      v
+    end.index_by {|v| v.system_data.name }
   end
 
   def create
-    @system_data = SystemData.new(params[:system_data])
-    if @system_data.save
-      flash[:notice] = "Create successful!"
+    @system_data_value = SystemDataValue.new(params[:system_data_value])
+    if @system_data_value.save
+      flash[:notice] = I18n.t('flash.system_data.create_successful')
       redirect_to system_datas_url
     end
   end
 
   def destroy
-    @system_data = SystemData.find(params[:id])
-    @system_data.destroy
+    value = SystemDataValue.find(params[:id])
+    value.destroy
     redirect_to system_datas_url
   end
 
