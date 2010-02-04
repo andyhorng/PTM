@@ -113,6 +113,10 @@ form.locale {
   border: thin;
 }
 
+#info tr td span {
+  text-decoration: underline;
+}
+
 #info p {
 }
 

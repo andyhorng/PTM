@@ -9,6 +9,7 @@
       <td>
         <table class="table_list">
           <tr>
+            <th><%= I18n.t('student.system_id') %></th>
             <th><%= I18n.t('student.name') %></th>
             <th><%= I18n.t('student.student_id') %></th>
             <th><%= I18n.t('student.department') %></th>
@@ -25,6 +26,7 @@
 
           <% group.each do |student| %>
             <tr class="<%= cycle("even", "odd") %>">
+              <td><%= h student.id %></td>
               <td><%= link_to (h student.name), {:action => :show, :id => student, 
                 :search_string => params[:search_string]} %></td>
               <td><%=h student.student_number %></td>

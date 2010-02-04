@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :system_datas
 
-  map.root :controller => "administrator_sessions", :action => "new" # optional, this just sets the root route
+  map.root :controller => "administrator_sessions", :action => "new" 
 
   map.resources :students, :collection => { :end_searching => :get, 
     :small_helper => :get, :search_for_index => :get, :back => :get,

@@ -1,4 +1,6 @@
   <tr class="fields">
+    <td><%= f.select :money_source, SystemData.all_values_of('money_source') %></td>
+    <td><%= f.select :pt_type, SystemData.all_values_of('pt_type') %></td>
     <td><%= f.select(:semester_type, 
                      [ I18n.t('student.hour.type.a'),
                        I18n.t('student.hour.type.b'),
@@ -9,5 +11,6 @@
     <td><%= f.text_field :week_hours, :size => 4 %></td>
     <td><%= f.text_field :total_hours, :size => 4 %></td>
     <td><%= f.text_field :hourly_money, :size => 4 %></td>
+    <td><%= f.text_field :total_money, :size => 4 %></td>
     <td><%= remove_child_link(I18n.t('student.hour.delete'), f) %></td>
   </tr>

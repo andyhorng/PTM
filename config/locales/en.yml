@@ -20,8 +20,10 @@ en:
 
 
   student:
+    system_id: "number"
     basic_info: "background"
     list: "list"
+    submit: "save"
     new: "new"
     edit: "edit"
     delete: "delete"
@@ -72,6 +74,7 @@ en:
   system_data:
     money_source: "source"
     pt_type: "type"
+    department: "dep."
     create: "create"
     delete: "delete"
     confirm: "submit"

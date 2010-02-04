@@ -5,21 +5,23 @@
   <% end %>
 <% end %>
 
+<% unless action_name == "show" %>
+<% content_for(:sidebar) do %>
+  <li><%= link_to_function(I18n.t('student.submit'), "$('student_form').submit()") %></li>
+<% end %>
+<% end %>
 
 <% content_for(:sidebar) do %>
   <li><%= link_to I18n.t('student.back'), :action => 'back' %></li>
 <% end %>
 
 <div id="student">
-<% form_for(student) do |f| %>
+<% form_for(student, :html => {:id => 'student_form'}) do |f| %>
 <div id="info">
   <h1><%= I18n.t('student.basic_info') %></h1>
   <%= f.error_messages %>
   <%= render :partial => 'student_form', :object => f %>
 </div>
 
-<p>
-<%= f.submit '送出' %>
-</p>
 <% end %>
 </div>

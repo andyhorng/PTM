@@ -35,8 +35,10 @@ tw:
 
 
   student:
+    system_id: "編號"
     basic_info: "基本資訊"
     list: "清單"
+    submit: "存檔"
     new: "新增"
     edit: "編輯"
     delete: "刪除"
@@ -45,12 +47,11 @@ tw:
     back: "返回"
     recently_changed: "最近更新"
 
-    money_source: "來源"
-    pt_type: "工讀類型"
     name: "姓名"
     student_id: "學號"
     department:  "系所"
     total_hours: "總時數"
+    total_money: "總金額"
     id: "身份證"
     email: "E-Mail"
     phone_number: "手機"
@@ -76,8 +77,11 @@ tw:
       week_hours: "周時數"
       total_hours: "總時數"
       hourly_money: "時薪"
+      total_money: "總金額"
       delete: "刪除"
       new: "新增時數"
+      money_source: "預算來源"
+      pt_type: "工讀類型"
       
 
     search: 
@@ -88,6 +92,7 @@ tw:
   system_data:
     money_source: "預算來源"
     pt_type: "工讀類型"
+    department: "系所"
     create: "建立"
     delete: "刪除"
     confirm: "確定嗎？"
