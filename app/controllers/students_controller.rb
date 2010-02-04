@@ -56,7 +56,6 @@ class StudentsController < ApplicationController
 =end
 
 
-
   def search_for_index
     if params[:search_string] || searching?
       session[:searching] = true
@@ -76,8 +75,7 @@ class StudentsController < ApplicationController
   def search_for_helper
     if !params[:search_string].blank? 
       session[:search_string_for_helper] = params[:search_string]
-      session[:small_helper_result] = 
-        Student.find_by_sql(gen_searching_sql(session[:search_string_for_helper]))
+      session[:small_helper_result] = Student.keyword(session[:search_string_for_helper])
     end 
     render :partial => "students", :object => session[:small_helper_result], :locals => {:readonly => true}
   end
@@ -196,23 +194,12 @@ class StudentsController < ApplicationController
 
   # return search result
   def search str = session[:search_string]
-    Student.paginate_by_sql(gen_searching_sql(str), :page => params[:page])
+    Student.keyword(str).paginate(:page => params[:page])
   end
 
-
-  def gen_searching_sql(search_string)
-    column_for_search = Student.column_names
-    holder = []
-    column_for_search.each do |column|
-      holder << " #{column} like ? "
-    end
-    holder_str = holder.join(" OR ")
-
-    ["select * from students where " + holder_str, 
-      *(["%#{search_string}%"] * column_for_search.size)]
-  end
   def searching(search_string)
   end
+
   def searching?
     session[:searching]
   end

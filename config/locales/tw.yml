@@ -44,7 +44,7 @@ tw:
     delete: "刪除"
     confirm: "確定嗎？"
     clear: "清除"
-    back: "返回"
+    back: "返回清單"
     recently_changed: "最近更新"
 
     name: "姓名"
