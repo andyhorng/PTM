@@ -1,7 +1,7 @@
 <div class="search_div">
 
   <% form_tag(search_for_index_students_url, :method => 'get') do %>
-    <%= text_field_tag :search_string, session[:search_string] %>
+    <%= text_field_tag :search_string, session[:search_string], {:size => 80} %>
     <%= submit_tag '搜尋' %>
   <% end %>
 

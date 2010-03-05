@@ -10,19 +10,40 @@ class Student < ActiveRecord::Base
 
   accepts_nested_attributes_for :hours, :reject_if => lambda { |a| a.values.all?(&:blank?) }, :allow_destroy => true
 
-  named_scope :keyword, lambda { |key| 
-    columns_for_search = 
-      ["name", "student_number", "department", "id_number", "phone_number", "address",
-        "post_office_account", "post_office_number", "memo",
-        "email", "post_office_name", "home_tel", "work_tel"]
-    holder = []
-    columns_for_search.each do |column|
-      holder << " #{column} like ? "
-    end
-    holder_str = holder.join(" OR ")
+  named_scope :keyword, lambda { |keys| 
 
-    {:conditions => [holder_str, 
-      *(["%#{key}%"] * columns_for_search.size)] }
+    elements = []
+    entire_sql = keys.dup
+
+    entire_sql.strip!
+    entire_sql.squeeze!(' ')
+    entire_sql.gsub!(/ +/, ' AND ')
+
+    entire_sql.gsub!(/ +AND +\+ +AND +/, '+')
+    entire_sql.gsub!(/ +\( +AND +/, '(')
+    entire_sql.gsub!(/ +AND +\) +/, ')')
+    entire_sql.gsub!('+', ' OR ')
+
+    entire_sql.squeeze!(' ')
+
+    entire_sql.dup.scan(/\w+/) do |key|
+      unless key == "AND" || key == "OR"
+        columns_for_search = 
+          ["name", "student_number", "department", "id_number", "phone_number", "address",
+            "post_office_account", "post_office_number", "memo",
+            "email", "post_office_name", "home_tel", "work_tel"]
+        holder = []
+        columns_for_search.each do |column|
+          holder << " #{column} like ? "
+        end
+        holder_str = holder.join(" OR ")
+        elements << (["%#{key}%"] * columns_for_search.size)
+        entire_sql.sub!(/\b#{key}\b/, "( #{holder_str} )")
+      end
+    end
+    elements.flatten!
+
+    {:conditions => [entire_sql, *elements] }
   }
 
 =begin

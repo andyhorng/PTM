@@ -193,7 +193,7 @@ class StudentsController < ApplicationController
   private
 
   # return search result
-  def search str = session[:search_string]
+  def search(str = session[:search_string])
     Student.keyword(str).paginate(:page => params[:page])
   end
 
