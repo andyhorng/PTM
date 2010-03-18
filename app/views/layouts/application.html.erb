@@ -32,13 +32,14 @@
     <span id="loading" style="display: none;"><%= I18n.t('layout.loading') %></span>
   </div>
 
-  <div id="flash_notice"><%= flash[:notice] %></div>
 
   <div id="sidebar">
     <ul id="sidebar_menu" style="display:none;">
       <%= yield(:sidebar) -%>
     </ul>
     
+    <div id="flash_notice"><%= flash[:notice] %></div>
+
     <% form_tag '', :method => 'GET', :class => 'locale' do %>
       <%= select_tag 'locale', options_for_select(LANGUAGES, I18n.locale), 
         :onchange => 'this.form.submit()' %>

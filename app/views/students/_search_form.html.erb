@@ -4,5 +4,12 @@
     <%= text_field_tag :search_string, session[:search_string], {:size => 80} %>
     <%= submit_tag '搜尋' %>
   <% end %>
+  <div>
+    <ul>
+      <li>用空白鍵隔開可做 and 搜尋</li>
+      <li>用 + 隔開可做 or 搜尋</li>
+      <li>用 : 可以指定欄位。如 name:小明</li>
+    </ul>
+  </div>
 
 </div>

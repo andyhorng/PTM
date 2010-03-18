@@ -26,19 +26,30 @@ class Student < ActiveRecord::Base
 
     entire_sql.squeeze!(' ')
 
-    entire_sql.dup.scan(/\w+/) do |key|
-      unless key == "AND" || key == "OR"
+    entire_sql.dup.scan(/[\w:^]+/) do |key|
+      if key.include? ':'
+        columns_for_search = []
+        columns_for_search << key.split(':').first
+        value = key.split(':').last
+      else
+        # no specified column
         columns_for_search = 
           ["name", "student_number", "department", "id_number", "phone_number", "address",
             "post_office_account", "post_office_number", "memo",
             "email", "post_office_name", "home_tel", "work_tel"]
+        value = key
+      end
+      unless key == "AND" || key == "OR"
         holder = []
         columns_for_search.each do |column|
           holder << " #{column} like ? "
         end
         holder_str = holder.join(" OR ")
-        elements << (["%#{key}%"] * columns_for_search.size)
+
+        elements << ( ["%#{value}%"] * columns_for_search.size)
+
         entire_sql.sub!(/\b#{key}\b/, "( #{holder_str} )")
+        entire_sql.sub!(/#{key}/, " ( #{holder_str} ) ") if key.include? ':'
       end
     end
     elements.flatten!

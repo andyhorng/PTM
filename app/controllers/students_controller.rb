@@ -10,8 +10,10 @@ class StudentsController < ApplicationController
       @students = Student.paginate :page => params[:page]
     else
       # searching!
-      flash.now[:notice] = I18n.t('flash.student.clear')
-      @students = search
+      if !session[:keyword_error] 
+        flash.now[:notice] = I18n.t('flash.student.clear')
+        @students = search
+      end
     end
 
     respond_to do |format|
@@ -58,10 +60,14 @@ class StudentsController < ApplicationController
 
   def search_for_index
     if params[:search_string] || searching?
-      session[:searching] = true
-      session[:search_string] = params[:search_string]
-      @students = search
-      flash.now[:notice] = I18n.t('flash.student.clear')
+      unless StudentsController.check_keyword(params[:search_string])
+        flash[:notice] = '搜尋字串格式錯誤'
+        session[:keyword_error] = true
+      else
+        session[:keyword_error] = false
+        session[:searching] = true
+        session[:search_string] = params[:search_string]
+      end
       # render search.html.erb
       # render :update do |page|
       #   page.replace_html 'students_list', :partial => 'students', :object => @students, :locals => {:column => 2}
@@ -73,11 +79,14 @@ class StudentsController < ApplicationController
   end
 
   def search_for_helper
-    if !params[:search_string].blank? 
+    session[:search_string_for_helper] = params[:search_string] if !params[:search_string].blank?
+    if !StudentsController.check_keyword(session[:search_string_for_helper])
+      render :text => '<h1 style="color: red">搜尋字串格式錯誤</h1>'
+    elsif !params[:search_string].blank? 
       session[:search_string_for_helper] = params[:search_string]
       session[:small_helper_result] = Student.keyword(session[:search_string_for_helper])
-    end 
-    render :partial => "students", :object => session[:small_helper_result], :locals => {:readonly => true}
+      render :partial => "students", :object => session[:small_helper_result], :locals => {:readonly => true}
+    end
   end
 
   def back
@@ -188,6 +197,19 @@ class StudentsController < ApplicationController
     session[:searching] = false
     session[:search_string] = nil
     redirect_to students_url
+  end
+
+  def statistics
+  end
+
+  class << self
+    def check_keyword(keyword)
+      # pattern
+      p = /^(\w+:\w+|\w+)((([ +])+(\w+:\w+|\w+))| *$)*/
+      result = p.match(keyword)
+      return true if !result.nil? and keyword == result[0]
+      return false
+    end
   end
 
   private
